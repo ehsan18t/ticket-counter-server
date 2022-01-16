@@ -7,6 +7,7 @@ import java.io.*;
 import java.net.Socket;
 
 public class ClientHandler implements Runnable {
+    private int id;
     private Socket sc;
     private ObjectInputStream receiveObj;
     private ObjectOutputStream sendObj;
@@ -20,8 +21,9 @@ public class ClientHandler implements Runnable {
             InputStream inputStream = sc.getInputStream();
             receiveObj = new ObjectInputStream(inputStream);
 
-            Server.clientCount++;
+            id = ++Server.clientCount;
             Server.clients.put(this, Server.clientCount + "");
+            System.out.println(" - Connected with client " + id + "!");
         } catch (IOException e) {
             close(sc, receiveObj, sendObj);
         }
@@ -39,7 +41,7 @@ public class ClientHandler implements Runnable {
             }
         } catch (IOException | ClassNotFoundException e) {
             close(sc, receiveObj, sendObj);
-            e.printStackTrace();
+            System.out.println(" - Disconnected client " + id + "!\n\n");
         }
     }
 
@@ -90,7 +92,7 @@ public class ClientHandler implements Runnable {
     }
 
     void removeClientHandler() {
-        System.out.println("\n\nFinish Serving " + Server.clients.get(this) + "\n\n");
+        System.out.println(" - Finish Serving client " + Server.clients.get(this));
         Server.clients.remove(this);
     }
 
