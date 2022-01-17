@@ -19,9 +19,7 @@ public class Server {
     }
 
     public void startServer() {
-
         String database = "database.ser";
-        int requestCount = 0;
 
         try {
             File file = new File(database);
