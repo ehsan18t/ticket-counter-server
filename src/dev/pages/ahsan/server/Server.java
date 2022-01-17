@@ -50,10 +50,4 @@ public class Server {
             e.printStackTrace();
         }
     }
-
-    public static void main(String[] args) throws IOException {
-        ServerSocket serverSocket = new ServerSocket(6611);
-        Server server = new Server(serverSocket);
-        server.startServer();
-    }
 }
