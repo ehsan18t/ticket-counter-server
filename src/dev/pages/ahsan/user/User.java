@@ -17,7 +17,7 @@ public class User implements Serializable {
         this.name = name;
         this.email = email;
         this.phone = phone;
-        this.passwords = Utils.sha256(passwords);
+        this.passwords = passwords;
         this.type = "User";
         this.id = userCount;
         userCount++;
@@ -26,7 +26,7 @@ public class User implements Serializable {
     public User(String email, String passwords) {
         // For login (Send to server)
         this.email = email;
-        this.passwords = Utils.sha256(passwords);
+        this.passwords = passwords;
 
         this.name = null;
         this.phone = null;

@@ -4,10 +4,12 @@ import dev.pages.ahsan.user.User;
 import dev.pages.ahsan.utils.Utils;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 public class Operations {
-    synchronized public static void register(User user, ObjectOutputStream sendObj) throws IOException {
+    synchronized public static void register(ObjectOutputStream sendObj, ObjectInputStream receiveObj) throws IOException, ClassNotFoundException {
+        User user = (User) receiveObj.readObject();
         System.out.println(" - Attempt to registration");
         if (!Server.data.containsKey(user.getEmail())) {
             Server.data.put(user.getEmail(), user);
@@ -20,7 +22,8 @@ public class Operations {
         }
     }
 
-    public static void login(User user, ObjectOutputStream sendObj) throws IOException {
+    public static void login(ObjectOutputStream sendObj, ObjectInputStream receiveObj) throws IOException, ClassNotFoundException {
+        User user = (User) receiveObj.readObject();
         System.out.println(" - Attempt to Login");
         System.out.println(" - Passwords Hash: " + user.getPasswords());
         if (Server.data.containsKey(user.getEmail())) {
@@ -38,4 +41,12 @@ public class Operations {
         sendObj.writeObject("FAILED!");
     }
 
+    synchronized public static void updateInfo(ObjectInputStream receiveObj) throws IOException, ClassNotFoundException {
+        User user = (User) receiveObj.readObject();
+        System.out.println(" - Attempt to update user info");
+        Server.data.put(user.getEmail(), user);
+        System.out.println(" - New Pass Hash: " + user.getPasswords());
+        Utils.writeHashMapToFile(Server.data, "database.ser");
+        System.out.println(" - Update Info Successful");
+    }
 }

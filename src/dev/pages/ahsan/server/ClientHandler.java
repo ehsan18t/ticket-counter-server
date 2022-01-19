@@ -35,8 +35,7 @@ public class ClientHandler implements Runnable {
             while (sc.isConnected()) {
                 // Receiving Request
                 request = (String) receiveObj.readObject();
-                User user = (User) receiveObj.readObject();
-                task(user, request);
+                task(request);
             }
         } catch (IOException | ClassNotFoundException e) {
             close(sc, receiveObj, sendObj);
@@ -44,14 +43,15 @@ public class ClientHandler implements Runnable {
         }
     }
 
-    void task(User user, String request) {
+    void task(String request) {
         try {
             System.out.println(" - Received request for " + request);
 
             // Handling Request
             switch (request) {
-                case "registration" -> Operations.register(user, sendObj);
-                case "login" -> Operations.login(user, sendObj);
+                case "registration" -> Operations.register(sendObj, receiveObj);
+                case "login" -> Operations.login(sendObj, receiveObj);
+                case "updateInfo" -> Operations.updateInfo(receiveObj);
             }
         } catch (Exception e) {
             close(sc, receiveObj, sendObj);
