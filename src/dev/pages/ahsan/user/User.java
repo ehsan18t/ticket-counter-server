@@ -65,4 +65,12 @@ public class User implements Serializable {
     public void setPasswords(String passwords) {
         this.passwords = passwords;
     }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 }
