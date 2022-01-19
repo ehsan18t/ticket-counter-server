@@ -51,7 +51,9 @@ public class ClientHandler implements Runnable {
                 case "login" -> Operations.login(sendObj, receiveObj);
                 case "updateInfo" -> Operations.updateInfo(receiveObj);
                 case "addBus" -> Operations.addBus(receiveObj);
+                case "removeBus" -> Operations.removeBus(receiveObj);
                 case "getBusList" -> Operations.getBusList(sendObj);
+                case "getBusData" -> Operations.getBusData(sendObj);
             }
         } catch (Exception e) {
             close(sc, receiveObj, sendObj);

@@ -95,7 +95,7 @@ public class Utils {
             out.writeObject(data);
             out.close();
             fileOut.close();
-            System.out.println("  - Serialized bus data is saved in " + filePath);
+            System.out.println(" - Serialized bus data is saved in " + filePath);
         } catch (IOException i) {
             i.printStackTrace();
         }

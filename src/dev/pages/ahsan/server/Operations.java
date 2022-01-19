@@ -58,7 +58,12 @@ public class Operations {
 
     synchronized public static void addBus(ObjectInputStream receiveObj) throws IOException, ClassNotFoundException {
         Bus bus = (Bus) receiveObj.readObject();
-        Server.busData.put(bus, new HashMap<String, ArrayList<Ticket>>());
+        Server.busData.put(bus, new HashMap<>());
+        Utils.writeBusDataToFile(Server.busData, "busData.ser");
+    }
+
+    synchronized public static void removeBus(ObjectInputStream receiveObj) throws IOException, ClassNotFoundException {
+        Server.busData = (HashMap<Bus, HashMap<String, ArrayList<Ticket>>>) receiveObj.readObject();
         Utils.writeBusDataToFile(Server.busData, "busData.ser");
     }
 
@@ -68,5 +73,9 @@ public class Operations {
             buses.add(entry.getKey());
         }
         sendObj.writeObject(buses);
+    }
+
+    public static void getBusData(ObjectOutputStream sendObj) throws IOException {
+        sendObj.writeObject(Server.busData);
     }
 }
