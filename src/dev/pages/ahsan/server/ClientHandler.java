@@ -1,7 +1,5 @@
 package dev.pages.ahsan.server;
 
-import dev.pages.ahsan.user.User;
-
 import java.io.*;
 import java.net.Socket;
 
@@ -52,6 +50,8 @@ public class ClientHandler implements Runnable {
                 case "registration" -> Operations.register(sendObj, receiveObj);
                 case "login" -> Operations.login(sendObj, receiveObj);
                 case "updateInfo" -> Operations.updateInfo(receiveObj);
+                case "addBus" -> Operations.addBus(receiveObj);
+                case "getBusList" -> Operations.getBusList(sendObj);
             }
         } catch (Exception e) {
             close(sc, receiveObj, sendObj);

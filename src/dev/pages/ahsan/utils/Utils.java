@@ -1,11 +1,15 @@
 package dev.pages.ahsan.utils;
 
+import dev.pages.ahsan.user.Bus;
+import dev.pages.ahsan.user.Ticket;
 import dev.pages.ahsan.user.User;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class Utils {
     public static String sha256(final String base) {
@@ -59,7 +63,7 @@ public class Utils {
             out.writeObject(data);
             out.close();
             fileOut.close();
-            System.out.println("  - Serialized data is saved in " + filePath);
+            System.out.println(" - Serialized data is saved in " + filePath);
         } catch (IOException i) {
             i.printStackTrace();
         }
@@ -72,6 +76,38 @@ public class Utils {
             FileInputStream fileIn = new FileInputStream(filePath);
             ObjectInputStream in = new ObjectInputStream(fileIn);
             data = (HashMap<String, User>) in.readObject();
+            in.close();
+            fileIn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (data == null)
+            data = new HashMap<>();
+        return data;
+    }
+
+
+
+    synchronized public static void writeBusDataToFile(HashMap<Bus, HashMap<String, ArrayList<Ticket>>> data, String filePath) {
+        try {
+            FileOutputStream fileOut = new FileOutputStream(filePath);
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(data);
+            out.close();
+            fileOut.close();
+            System.out.println("  - Serialized bus data is saved in " + filePath);
+        } catch (IOException i) {
+            i.printStackTrace();
+        }
+    }
+
+
+    synchronized public static HashMap<Bus, HashMap<String, ArrayList<Ticket>>> readBusDataFromFile(String filePath) {
+        HashMap<Bus, HashMap<String, ArrayList<Ticket>>> data = null;
+        try {
+            FileInputStream fileIn = new FileInputStream(filePath);
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            data = (HashMap<Bus, HashMap<String, ArrayList<Ticket>>>) in.readObject();
             in.close();
             fileIn.close();
         } catch (Exception e) {

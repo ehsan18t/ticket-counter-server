@@ -1,11 +1,17 @@
 package dev.pages.ahsan.server;
 
+import dev.pages.ahsan.user.Bus;
+import dev.pages.ahsan.user.Ticket;
 import dev.pages.ahsan.user.User;
 import dev.pages.ahsan.utils.Utils;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 
 public class Operations {
     synchronized public static void register(ObjectOutputStream sendObj, ObjectInputStream receiveObj) throws IOException, ClassNotFoundException {
@@ -48,5 +54,19 @@ public class Operations {
         System.out.println(" - New Pass Hash: " + user.getPasswords());
         Utils.writeHashMapToFile(Server.data, "database.ser");
         System.out.println(" - Update Info Successful");
+    }
+
+    synchronized public static void addBus(ObjectInputStream receiveObj) throws IOException, ClassNotFoundException {
+        Bus bus = (Bus) receiveObj.readObject();
+        Server.busData.put(bus, new HashMap<String, ArrayList<Ticket>>());
+        Utils.writeBusDataToFile(Server.busData, "busData.ser");
+    }
+
+    public static void getBusList(ObjectOutputStream sendObj) throws IOException {
+        HashSet<Bus> buses = new HashSet<>();
+        for (Map.Entry<Bus, HashMap<String, ArrayList<Ticket>>> entry: Server.busData.entrySet()) {
+            buses.add(entry.getKey());
+        }
+        sendObj.writeObject(buses);
     }
 }
