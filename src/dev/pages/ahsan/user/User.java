@@ -1,6 +1,5 @@
 package dev.pages.ahsan.user;
 
-import dev.pages.ahsan.utils.Utils;
 import java.io.Serializable;
 
 public class User implements Serializable {

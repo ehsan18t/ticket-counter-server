@@ -77,6 +77,8 @@ public class Utils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        if (data == null)
+            data = new HashMap<>();
         return data;
     }
 }
