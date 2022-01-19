@@ -32,6 +32,7 @@ src/META-INF/MANIFEST.MF
 userData.ser
 savedUser.ser
 database.ser
+busData.ser
 
 # Exception
 !/src/lib/*
