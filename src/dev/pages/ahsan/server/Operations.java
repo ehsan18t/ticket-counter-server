@@ -62,7 +62,7 @@ public class Operations {
         Utils.writeBusDataToFile(Server.busData, "busData.ser");
     }
 
-    synchronized public static void removeBus(ObjectInputStream receiveObj) throws IOException, ClassNotFoundException {
+    synchronized public static void overRide(ObjectInputStream receiveObj) throws IOException, ClassNotFoundException {
         Server.busData = (HashMap<Bus, HashMap<String, ArrayList<Ticket>>>) receiveObj.readObject();
         Utils.writeBusDataToFile(Server.busData, "busData.ser");
     }
