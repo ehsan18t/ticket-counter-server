@@ -5,9 +5,9 @@ import java.net.Socket;
 
 public class ClientHandler implements Runnable {
     private int id;
-    private Socket sc;
-    private ObjectInputStream receiveObj;
-    private ObjectOutputStream sendObj;
+    public Socket sc;
+    public ObjectInputStream receiveObj;
+    public ObjectOutputStream sendObj;
 
     public ClientHandler(Socket sc) {
         try {
@@ -50,8 +50,15 @@ public class ClientHandler implements Runnable {
                 case "registration" -> Operations.register(sendObj, receiveObj);
                 case "login" -> Operations.login(sendObj, receiveObj);
                 case "updateInfo" -> Operations.updateInfo(receiveObj);
-                case "addBus" -> Operations.addBus(receiveObj);
-                case "removeBus" -> Operations.overRide(receiveObj);
+                case "addBus" -> {
+                    Operations.addBus(receiveObj, "refreshAll");
+                }
+                case "removeBus" -> {
+                    Operations.overWrite(receiveObj, "refreshAll");
+                }
+                case "buy" -> {
+                    Operations.overWrite(receiveObj, "refresh");
+                }
                 case "getBusList" -> Operations.getBusList(sendObj);
                 case "getBusData" -> Operations.getBusData(sendObj);
             }

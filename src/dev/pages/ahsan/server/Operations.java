@@ -1,5 +1,6 @@
 package dev.pages.ahsan.server;
 
+import dev.pages.ahsan.main.Main;
 import dev.pages.ahsan.user.Bus;
 import dev.pages.ahsan.user.Ticket;
 import dev.pages.ahsan.user.User;
@@ -56,15 +57,17 @@ public class Operations {
         System.out.println(" - Update Info Successful");
     }
 
-    synchronized public static void addBus(ObjectInputStream receiveObj) throws IOException, ClassNotFoundException {
+    synchronized public static void addBus(ObjectInputStream receiveObj, String cmd) throws IOException, ClassNotFoundException {
         Bus bus = (Bus) receiveObj.readObject();
         Server.busData.put(bus, new HashMap<>());
         Utils.writeBusDataToFile(Server.busData, "busData.ser");
+        refresh(cmd);
     }
 
-    synchronized public static void overRide(ObjectInputStream receiveObj) throws IOException, ClassNotFoundException {
+    synchronized public static void overWrite(ObjectInputStream receiveObj, String cmd) throws IOException, ClassNotFoundException {
         Server.busData = (HashMap<Bus, HashMap<String, ArrayList<Ticket>>>) receiveObj.readObject();
         Utils.writeBusDataToFile(Server.busData, "busData.ser");
+        refresh(cmd);
     }
 
     public static void getBusList(ObjectOutputStream sendObj) throws IOException {
@@ -77,5 +80,18 @@ public class Operations {
 
     public static void getBusData(ObjectOutputStream sendObj) throws IOException {
         sendObj.writeObject(Server.busData);
+    }
+
+    synchronized public static void refresh(String cmd) {
+        System.out.println(" - Start Refreshing...");
+        try {
+            for (Map.Entry<ClientHandler, String> entry: Server.clients.entrySet()) {
+                System.out.println(" - Refresh Client " + entry.getValue());
+                entry.getKey().sendObj.writeObject(cmd);
+                entry.getKey().sendObj.writeObject(Server.busData);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
