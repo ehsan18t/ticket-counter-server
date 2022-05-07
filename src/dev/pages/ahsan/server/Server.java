@@ -3,6 +3,7 @@ package dev.pages.ahsan.server;
 import dev.pages.ahsan.user.Bus;
 import dev.pages.ahsan.user.Ticket;
 import dev.pages.ahsan.user.User;
+import dev.pages.ahsan.utils.FileIO;
 import dev.pages.ahsan.utils.Utils;
 
 import java.io.*;
@@ -15,8 +16,8 @@ public class Server {
     public ServerSocket serverSocket;
     public static int clientCount = 0;
     public static HashMap<ClientHandler, String> clients = new HashMap<>();
-    public static HashMap<String, User> data;
-    public static HashMap<Bus, HashMap<String, ArrayList<Ticket>>>  busData;
+    public static HashMap<String, User> data = new HashMap<>();
+    public static HashMap<Bus, HashMap<String, ArrayList<Ticket>>>  busData = new HashMap<>();
 
     public Server(ServerSocket serverSocket) {
         this.serverSocket = serverSocket;
@@ -27,13 +28,11 @@ public class Server {
         String busDataPath = "busData.ser";
 
         try {
-            File f1 = new File(database);
-            boolean isF1Created = f1.createNewFile();
-            File f2 = new File(busDataPath);
-            boolean isF2Created = f2.createNewFile();
+            FileIO.checkDB(busDataPath, busData);
+            FileIO.checkDB(database, data);
 
-            busData = Utils.readBusDataFromFile(busDataPath);
-            data = Utils.readHashMapFromFile(database);
+            data = FileIO.readObjFromFile(database);
+            busData = FileIO.readObjFromFile(busDataPath);
 
             System.out.println("Server is waiting for client.");
 
