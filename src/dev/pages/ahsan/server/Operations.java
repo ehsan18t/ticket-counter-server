@@ -48,6 +48,10 @@ public class Operations {
         sendObj.writeObject("FAILED!");
     }
 
+    public static void logout(ObjectOutputStream sendObj) throws IOException {
+        sendObj.writeObject("Success");
+    }
+
     synchronized public static void updateInfo(ObjectInputStream receiveObj) throws IOException, ClassNotFoundException {
         User user = (User) receiveObj.readObject();
         System.out.println(" - Attempt to update user info");

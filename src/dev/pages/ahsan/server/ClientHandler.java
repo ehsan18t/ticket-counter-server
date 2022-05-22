@@ -49,6 +49,7 @@ public class ClientHandler implements Runnable {
             switch (request) {
                 case "registration" -> Operations.register(sendObj, receiveObj);
                 case "login" -> Operations.login(sendObj, receiveObj);
+                case "logout" -> Operations.logout(sendObj);
                 case "updateInfo" -> Operations.updateInfo(receiveObj);
                 case "addBus" -> {
                     Operations.addBus(receiveObj, "refreshAll");
