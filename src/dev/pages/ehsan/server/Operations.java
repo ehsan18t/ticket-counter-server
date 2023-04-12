@@ -1,8 +1,8 @@
 package dev.pages.ehsan.server;
 
-import dev.pages.ehsan.user.Bus;
-import dev.pages.ehsan.user.Ticket;
-import dev.pages.ehsan.user.User;
+import dev.pages.ehsan.classes.Bus;
+import dev.pages.ehsan.classes.Ticket;
+import dev.pages.ehsan.classes.User;
 import dev.pages.ehsan.utils.Utils;
 
 import java.io.IOException;
@@ -36,7 +36,7 @@ public class Operations {
             if (Server.data.get(user.getEmail()).getPasswords().equals(user.getPasswords())) {
                 System.out.println(" - login success");
                 sendObj.writeObject("SUCCESS");
-                System.out.println(" - sending user info");
+                System.out.println(" - sending classes info");
                 user = Server.data.get(user.getEmail());
                 sendObj.writeObject(user);
                 System.out.println(" - info send successfully!");
@@ -53,7 +53,7 @@ public class Operations {
 
     synchronized public static void updateInfo(ObjectInputStream receiveObj) throws IOException, ClassNotFoundException {
         User user = (User) receiveObj.readObject();
-        System.out.println(" - Attempt to update user info");
+        System.out.println(" - Attempt to update classes info");
         Server.data.put(user.getEmail(), user);
         System.out.println(" - New Pass Hash: " + user.getPasswords());
         Utils.writeHashMapToFile(Server.data, "database.ser");

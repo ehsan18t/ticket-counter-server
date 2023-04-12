@@ -1,8 +1,8 @@
 package dev.pages.ehsan.utils;
 
-import dev.pages.ehsan.user.Bus;
-import dev.pages.ehsan.user.Ticket;
-import dev.pages.ehsan.user.User;
+import dev.pages.ehsan.classes.Bus;
+import dev.pages.ehsan.classes.Ticket;
+import dev.pages.ehsan.classes.User;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
