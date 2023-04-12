@@ -1,6 +1,6 @@
-package dev.pages.ahsan.main;
+package dev.pages.ehsan.main;
 
-import dev.pages.ahsan.server.Server;
+import dev.pages.ehsan.server.Server;
 
 import java.io.IOException;
 import java.net.ServerSocket;

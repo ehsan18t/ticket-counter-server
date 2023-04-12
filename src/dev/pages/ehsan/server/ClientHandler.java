@@ -1,4 +1,4 @@
-package dev.pages.ahsan.server;
+package dev.pages.ehsan.server;
 
 import java.io.*;
 import java.net.Socket;
