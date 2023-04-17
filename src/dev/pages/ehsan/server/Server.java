@@ -5,18 +5,18 @@ import dev.pages.ehsan.classes.Ticket;
 import dev.pages.ehsan.classes.User;
 import dev.pages.ehsan.utils.FileIO;
 
-import java.io.*;
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Server {
-    public ServerSocket serverSocket;
     public static int clientCount = 0;
     public static HashMap<ClientHandler, String> clients = new HashMap<>();
     public static HashMap<String, User> data = new HashMap<>();
-    public static HashMap<Bus, HashMap<String, ArrayList<Ticket>>>  busData = new HashMap<>();
+    public static HashMap<Bus, HashMap<String, ArrayList<Ticket>>> busData = new HashMap<>();
+    public ServerSocket serverSocket;
 
     public Server(ServerSocket serverSocket) {
         this.serverSocket = serverSocket;
@@ -36,7 +36,7 @@ public class Server {
             System.out.println("Server is waiting for client.");
 
             while (!serverSocket.isClosed()) {
-                Socket sc =  serverSocket.accept();
+                Socket sc = serverSocket.accept();
                 ClientHandler ch = new ClientHandler(sc);
                 Thread t = new Thread(ch);
                 t.start();

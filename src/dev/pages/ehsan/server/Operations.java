@@ -75,7 +75,7 @@ public class Operations {
 
     public static void getBusList(ObjectOutputStream sendObj) throws IOException {
         HashSet<Bus> buses = new HashSet<>();
-        for (Map.Entry<Bus, HashMap<String, ArrayList<Ticket>>> entry: Server.busData.entrySet()) {
+        for (Map.Entry<Bus, HashMap<String, ArrayList<Ticket>>> entry : Server.busData.entrySet()) {
             buses.add(entry.getKey());
         }
         sendObj.writeObject(buses);
@@ -88,7 +88,7 @@ public class Operations {
     synchronized public static void refresh(String cmd) {
         System.out.println(" - Start Refreshing...");
         try {
-            for (Map.Entry<ClientHandler, String> entry: Server.clients.entrySet()) {
+            for (Map.Entry<ClientHandler, String> entry : Server.clients.entrySet()) {
                 System.out.println(" - Refresh Client " + entry.getValue());
                 entry.getKey().sendObj.writeObject(cmd);
                 entry.getKey().sendObj.writeObject(Server.busData);
